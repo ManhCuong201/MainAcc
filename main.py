@@ -33,12 +33,17 @@ async def on_ready():
     rjson = {"message":"cf", "content":base64S.decode("utf-8"),"sha":sh}
     response = requests.put(link+"rerun.json", data=json.dumps(rjson), headers=header)
     
+
 @client.event
 async def on_call():
-    await asyncio.sleep(1)
-    if not client.get_guild(GUILD_ID).get_member(client.user.id).voice:
-        vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
-        await vc.connect()
+    try:
+        while True:
+            await asyncio.sleep(1)
+            if not client.get_guild(GUILD_ID).get_member(client.user.id).voice:
+                vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
+                await vc.connect()
+    except:
+        pass
     client.dispatch("call")
 
 client.run(os.getenv("TOKEN"))
