@@ -36,11 +36,11 @@ async def on_ready():
 
 @client.event
 async def on_call():
+    vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
     while True:
         await asyncio.sleep(1)
         if not client.get_guild(GUILD_ID).get_member(client.user.id).voice:
-            vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
             await vc.connect()
-    client.dispatch("call")
+            print(f"Successfully joined {vc.name} ({vc.id})")
 
 client.run(os.getenv("TOKEN"))
