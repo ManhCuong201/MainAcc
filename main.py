@@ -44,7 +44,7 @@ async def on_call():
                 await vc.connect()
                 check = False
             except:
-                pass
+                await asyncio.sleep(1)
                 
 @client.event
 async def on_voice_state_update(member, before, after):
@@ -56,7 +56,7 @@ async def on_voice_state_update(member, before, after):
                 await vc.connect()
                 check = False
             except:
-                pass
+                await asyncio.sleep(1)
             
             
 
