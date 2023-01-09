@@ -58,11 +58,11 @@ async def on_voice_state_update(member, before, after):
                 try:
                     vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
                     await vc.connect()
-                    check = False
+                    break
                 except:
                     await asyncio.sleep(1)
             else:
-                check = False
+                break
             
             
 
