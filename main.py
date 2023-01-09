@@ -75,6 +75,7 @@ async def on_message(message):
     elif message.content == "bot on":
         boton["status"] = True
         await message.channel.send("Bot go online!")
+        client.dispatch("call")
             
 
 client.run(os.getenv("TOKEN"))
