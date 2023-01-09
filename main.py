@@ -15,7 +15,7 @@ rtoken = os.getenv("RTOKEN")
 header = {"Authorization": "Bearer {}".format(rtoken)}
 link="https://api.github.com/repos/noname201012345/MainAcc/contents/"
 
-boton = True
+boton = {"status":True}
 
 @client.event
 async def on_ready():
@@ -53,7 +53,7 @@ async def on_call():
                 
 @client.event
 async def on_voice_state_update(member, before, after):
-    if boton:
+    if boton["status"]:
         if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
             check = True
             while check:
@@ -70,9 +70,11 @@ async def on_voice_state_update(member, before, after):
 @client.event
 async def on_message(message):  
     if message.content == "bot off":
-        boton = False
+        boton["status"] = False
+        await message.channel.send("Bot go offline!")
     elif message.content == "bot on":
-        boton = True
+        boton["status"] = True
+        await message.channel.send("Bot go online!")
             
 
 client.run(os.getenv("TOKEN"))
