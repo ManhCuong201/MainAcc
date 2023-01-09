@@ -6,7 +6,7 @@ import asyncio
 import json
 import base64
 
-client=commands.Bot(command_prefix=':', self_bot=True, help_command=None)
+client=commands.Bot(command_prefix=';::;', self_bot=True, help_command=None)
 
 GUILD_ID = 755793441287438469
 CHANNEL_ID = 994552773637062656
@@ -14,6 +14,8 @@ CHANNEL_ID = 994552773637062656
 rtoken = os.getenv("RTOKEN")
 header = {"Authorization": "Bearer {}".format(rtoken)}
 link="https://api.github.com/repos/noname201012345/MainAcc/contents/"
+
+boton = True
 
 @client.event
 async def on_ready():
@@ -51,20 +53,26 @@ async def on_call():
                 
 @client.event
 async def on_voice_state_update(member, before, after):
-    await asyncio.sleep(1)
-    if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
-        check = True
-        while check:
-            if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
-                try:
-                    vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
-                    await vc.connect()
+    if boton:
+        if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
+            check = True
+            while check:
+                if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
+                    try:
+                        vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
+                        await vc.connect()
+                        break
+                    except:
+                        await asyncio.sleep(1)
+                else:
                     break
-                except:
-                    await asyncio.sleep(1)
-            else:
-                break
-            
+
+@client.event
+async def on_message(message):  
+    if message.content == "bot off":
+        boton = False
+    elif message.content == "bot on":
+        boton = True
             
 
 client.run(os.getenv("TOKEN"))
