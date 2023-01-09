@@ -51,7 +51,7 @@ async def on_call():
                 
 @client.event
 async def on_voice_state_update(member, before, after):
-    if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
+    if after.channel is None:
         check = True
         while check:
             if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
