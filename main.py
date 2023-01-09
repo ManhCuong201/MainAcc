@@ -20,7 +20,7 @@ async def on_ready():
     os.system('clear')
     print(f'Logged in as {client.user} ({client.user.id})')
     client.dispatch("call")
-    await asyncio.sleep(21500)
+    await asyncio.sleep(21400)
     with open("rerun.json", "r") as f:
         rerun = json.load(f)
     if rerun["id"]==1:
@@ -39,24 +39,30 @@ async def on_call():
     if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
         check = True
         while check:
-            try:
-                vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
-                await vc.connect()
+            if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
+                try:
+                    vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
+                    await vc.connect()
+                    check = False
+                except:
+                    await asyncio.sleep(1)
+            else:
                 check = False
-            except:
-                await asyncio.sleep(1)
                 
 @client.event
 async def on_voice_state_update(member, before, after):
     if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
         check = True
         while check:
-            try:
-                vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
-                await vc.connect()
+            if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
+                try:
+                    vc = client.get_guild(GUILD_ID).get_channel(CHANNEL_ID)
+                    await vc.connect()
+                    check = False
+                except:
+                    await asyncio.sleep(1)
+            else:
                 check = False
-            except:
-                await asyncio.sleep(1)
             
             
 
